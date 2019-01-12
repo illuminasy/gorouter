@@ -1,0 +1,6 @@
+.DS_Store
+/.idea
+.git
+*/.DS_Store
+.env
+data_storage
