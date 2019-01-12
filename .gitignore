@@ -4,3 +4,6 @@
 */.DS_Store
 .env
 data_storage
+profiling
+gorouter.test
+.~lock.*
