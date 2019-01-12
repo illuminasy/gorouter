@@ -1,3 +1,6 @@
+## 0.1.2 (January 13, 2019)
+
+
 ## 0.1.1 (January 13, 2019)
   - Fixed ReadMe file.
 
