@@ -17,25 +17,25 @@ Just the router (no middleware)
 ```go
 func startServer() {
 	fmt.Println("Listening for http on port 80")
-	router := router.GetRouter(routes(), []string{})
+	router := gorouter.GetRouter(routes(), []string{})
 	log.Fatal(http.ListenAndServe(":80", router))
 }
 
-func routes() router.Routes {
-	return router.Routes{
-		List: []router.Route{
-			router.Route{
+func routes() gorouter.Routes {
+	return gorouter.Routes{
+		List: []gorouter.Route{
+			gorouter.Route{
 				Method: "GET",
 				Path:   "/robots.txt",
-				Handler: router.PlainTextHandler([]string{
+				Handler: gorouter.PlainTextHandler([]string{
 					"User-agent: *",
 					"Disallow: /",
 				}),
 			},
-			router.Route{
+			gorouter.Route{
 				Method:  "GET",
 				Path:    "/healthz",
-				Handler: router.JsonHandler(healthzHandler),
+				Handler: gorouter.JsonHandler(healthzHandler),
 			},
 		},
 		PanicHandler: func(w http.ResponseWriter, r *http.Request, err interface{}) {
@@ -79,25 +79,25 @@ func startServer() {
 	}
 
 	fmt.Println("Listening for http on port 80")
-	router := router.GetRouterWithMiddleware(mc, routes(), []string{})
+	router := gorouter.GetRouterWithMiddleware(mc, routes(), []string{})
 	log.Fatal(http.ListenAndServe(":80", router))
 }
 
-func routes() router.Routes {
-	return router.Routes{
-		List: []router.Route{
-			router.Route{
+func routes() gorouter.Routes {
+	return gorouter.Routes{
+		List: []gorouter.Route{
+			gorouter.Route{
 				Method: "GET",
 				Path:   "/robots.txt",
-				Handler: router.PlainTextHandler([]string{
+				Handler: gorouter.PlainTextHandler([]string{
 					"User-agent: *",
 					"Disallow: /",
 				}),
 			},
-			router.Route{
+			gorouter.Route{
 				Method:  "GET",
 				Path:    "/healthz",
-				Handler: router.JsonHandler(healthzHandler),
+				Handler: gorouter.JsonHandler(healthzHandler),
 			},
 		},
 		PanicHandler: func(w http.ResponseWriter, r *http.Request, err interface{}) {
@@ -116,5 +116,7 @@ func healthzHandler() string {
 
 ## Thanks to
 https://github.com/julienschmidt/httprouter
+
 https://github.com/newrelic/go-agent
+
 https://github.com/bugsnag/bugsnag-go
