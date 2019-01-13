@@ -1,3 +1,6 @@
+## 0.1.3 (January 13, 2019)
+  - Fixed Middleware imports.
+
 ## 0.1.2 (January 13, 2019)
 
 

@@ -2,9 +2,10 @@ package gorouter
 
 import (
 	"fmt"
-	"illuminasy/gorouter/middleware"
 	"net/http"
 	"strings"
+
+	"github.com/Illuminasy/gorouter/middleware"
 
 	"github.com/julienschmidt/httprouter"
 )
