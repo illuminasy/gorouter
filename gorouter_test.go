@@ -2,11 +2,12 @@ package gorouter
 
 import (
 	"fmt"
-	"illuminasy/gorouter/middleware"
 	"log"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/Illuminasy/gorouter/middleware"
 
 	"github.com/stretchr/testify/assert"
 )

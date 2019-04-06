@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"illuminasy/gorouter/middleware"
+	"github.com/Illuminasy/gorouter/middleware"
 
 	"github.com/julienschmidt/httprouter"
 )
