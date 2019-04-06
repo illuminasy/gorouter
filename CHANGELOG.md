@@ -1,3 +1,6 @@
+## 0.1.6 (April 06, 2019)
+  - Updated dependencies
+
 ## 0.1.5 (April 06, 2019)
   - Fixed import issues
 
