@@ -1,3 +1,6 @@
+## 0.1.4 (April 06, 2019)
+  - HTTP Writer and response can be accessed by the handlers
+
 ## 0.1.3 (January 13, 2019)
   - Fixed Middleware imports.
 

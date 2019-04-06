@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Illuminasy/gorouter/middleware"
+	"illuminasy/gorouter/middleware"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -40,9 +40,9 @@ func PlainTextHandler(lines []string) httprouter.Handle {
 }
 
 // JsonHandler handles json responses with appropriate headers
-func JsonHandler(handler func() string) httprouter.Handle {
+func JsonHandler(handler func(http.ResponseWriter, *http.Request) string) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-		body := handler()
+		body := handler(w, r)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(body))
 	}
