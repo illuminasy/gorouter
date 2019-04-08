@@ -1,3 +1,6 @@
+## 0.1.8 (April 09, 2019)
+  - Fixed import issues
+
 ## 0.1.7 (April 09, 2019)
   - Made Metric Collectore more generic
 
