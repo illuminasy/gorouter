@@ -1,3 +1,6 @@
+## 0.1.7 (April 09, 2019)
+  - Made Metric Collectore more generic
+
 ## 0.1.6 (April 06, 2019)
   - Updated dependencies
 
