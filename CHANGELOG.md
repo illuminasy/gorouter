@@ -1,3 +1,6 @@
+## 0.1.9 (April 10, 2019)
+  - Generic metric collector and error reporting
+
 ## 0.1.8 (April 09, 2019)
   - Fixed import issues
 

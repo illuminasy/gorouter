@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/Illuminasy/gorouter/middleware"
+	"github.com/illuminasy/gorouter/middleware"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -54,13 +54,13 @@ func GetRouter(routes Routes, additionalHeaders []string) *httprouter.Router {
 }
 
 // GetRouterWithMiddleware returns a router with middlewares wrapped around it, optionally additional headers can be passed to set
-func GetRouterWithMiddleware(mc middleware.MiddlewareConfig, routes Routes, additionalHeaders []string) http.Handler {
+func GetRouterWithMiddleware(mc middleware.Config, routes Routes, additionalHeaders []string) http.Handler {
 	router := createRouter(routes, additionalHeaders, mc)
-	return middleware.BugsnagMiddleware(router, mc.Bugsnag)
+	return middleware.ErrorReportingMiddleware(router, mc.ErrorReportingConfig)
 }
 
 // createRouter creates a router
-func createRouter(routes Routes, additionalHeaders []string, mc middleware.MiddlewareConfig) *httprouter.Router {
+func createRouter(routes Routes, additionalHeaders []string, mc middleware.Config) *httprouter.Router {
 	apiMethods := map[string][]string{}
 
 	router := httprouter.New()
@@ -75,6 +75,10 @@ func createRouter(routes Routes, additionalHeaders []string, mc middleware.Middl
 	}
 
 	return router
+}
+
+func wrapMiddlewares(handler httprouter.Handle, path string, mc middleware.Config) httprouter.Handle {
+	return middleware.Wrapper(handler, path, mc)
 }
 
 func constructOptions(methods []string, additionalHeaders []string) func(http.ResponseWriter, *http.Request, httprouter.Params) {
@@ -94,12 +98,4 @@ func decorateWithCORS(headers http.Header, methods string, additionalHeaders []s
 	headers.Set("Access-Control-Allow-Headers",
 		strings.Join(allowedHeaders, ","),
 	)
-}
-
-func wrapMiddlewares(handler httprouter.Handle, path string, mc middleware.MiddlewareConfig) httprouter.Handle {
-	if len(mc.Newrelic.License) > 0 {
-		handler = middleware.NewRelicMiddleware(handler, path, mc.Newrelic)
-	}
-
-	return handler
 }
