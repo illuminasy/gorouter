@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/Illuminasy/gorouter/middleware"
+	"github.com/illuminasy/gorouter/middleware"
 
 	"github.com/stretchr/testify/assert"
 )

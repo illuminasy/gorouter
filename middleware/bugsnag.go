@@ -6,19 +6,7 @@ import (
 	bugsnag "github.com/bugsnag/bugsnag-go"
 )
 
-// BugsnagConfig bugsnag config
-type BugsnagConfig struct {
-	APIKey              string
-	ReleaseStage        string
-	AppType             string
-	AppVersion          string
-	ProjectPackages     []string
-	NotifyReleaseStages []string
-	ParamsFilters       []string
-	PanicHandler        func()
-}
-
-func configureBugsnag(config BugsnagConfig) {
+func configureBugsnag(config ErrorReportingConfig) {
 	bugsnag.Configure(bugsnag.Configuration{
 		APIKey:              config.APIKey,
 		ReleaseStage:        config.ReleaseStage,
@@ -31,8 +19,8 @@ func configureBugsnag(config BugsnagConfig) {
 	})
 }
 
-// BugsnagMiddleware configures and wraps bugsnag handler around the router
-func BugsnagMiddleware(router http.Handler, config BugsnagConfig) http.Handler {
+// bugsnagMiddleware configures and wraps bugsnag handler around the router
+func bugsnagMiddleware(router http.Handler, config ErrorReportingConfig) http.Handler {
 	configureBugsnag(config)
 	return bugsnag.Handler(router)
 }

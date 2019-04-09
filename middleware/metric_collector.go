@@ -9,6 +9,17 @@ import (
 
 var metricCollector MetricCollector
 
+// MetricCollectorConfig Metric Collector config
+type MetricCollectorConfig struct {
+	Enabled         bool
+	Newrelic        bool
+	Debug           bool
+	AppName         string
+	License         string
+	Labels          map[string]string
+	HostDisplayName string
+}
+
 // MetricCollector Middleware with list of metric collectors to use
 type MetricCollector struct {
 	NewrelicApp newrelic.Application
@@ -16,27 +27,17 @@ type MetricCollector struct {
 
 // MetricCollectorTxn Metric Collector transaction
 type MetricCollectorTxn struct {
-	NewrelicTxn newrelic.Transaction
+	Txn newrelic.Transaction
 }
 
 // MetricCollectorSegment Metric Collector segment
 type MetricCollectorSegment struct {
-	NewrelicSegment *newrelic.Segment
+	Segment *newrelic.Segment
 }
 
 // MetricCollectorDatastoreSegment Metric Collector datastore segment
 type MetricCollectorDatastoreSegment struct {
-	NewrelicDatastoreSegment *newrelic.DatastoreSegment
-}
-
-// Config Metric Collector config
-type Config struct {
-	Enabled         bool
-	Newrelic        bool
-	AppName         string
-	License         string
-	Labels          map[string]string
-	HostDisplayName string
+	DatastoreSegment newrelic.DatastoreSegment
 }
 
 // DataStore Metric Collector datastore
@@ -51,38 +52,20 @@ type DataStore struct {
 	DatabaseName       string
 }
 
-// GetMetricCollector creates and returns new metric collector
-func GetMetricCollector(config Config) (MetricCollector, error) {
-	var err error
-
-	if !Config.Enabled {
-		return nil, err
+// metricCollectorMiddleware Creates and starts Metric Collector middlware
+func metricCollectorMiddleware(handler httprouter.Handle, path string, config MetricCollectorConfig) httprouter.Handle {
+	if config.Newrelic && len(config.License) > 0 {
+		return newrelicMiddleware(handler, path, config)
 	}
 
-	if metricCollector == (MetricCollector{}) || (config.Newrelic && metricCollector.NewrelicApp == nil) {
-		err = configureNewRelic(config)
-		metricCollector.NewrelicApp = newRelicApp
-	}
-
-	return MetricCollector, err
-}
-
-// MetricCollectorMiddleware Creates and starts Metric Collector middlware
-func MetricCollectorMiddleware(handler httprouter.Handle, path string, config Config) httprouter.Handle {
-	if config.Newrelic {
-		return newrelicMiddleware()
-	}
-
-	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-		handler(w, r, ps)
-	}
+	return handler
 }
 
 // GetMetricCollectorTransaction returns new or existing metric collector transanction
 func GetMetricCollectorTransaction(txnID string, txnName string, w http.ResponseWriter, r *http.Request) MetricCollectorTxn {
 	var mcTxn MetricCollectorTxn
-	if metricCollector.NewrelicApp != nil {
-		mcTxn.NewrelicTxn = getNewrelicTransaction(txnID, txnName, w, r)
+	if newRelicApp != nil {
+		mcTxn.Txn = getNewrelicTransaction(txnID, txnName, w, r)
 	}
 
 	return mcTxn
@@ -93,7 +76,7 @@ func StartMetricCollectorSegment(txnID string, txnName string, segmentName strin
 	var mxnSgmt MetricCollectorSegment
 
 	if metricCollector.NewrelicApp != nil {
-		mxnSgmt.NewrelicSegment = startNewrelicSegment(txn, segmentName, w, r)
+		mxnSgmt.Segment = startNewrelicSegment(txnID, txnName, segmentName, w, r)
 	}
 
 	return mxnSgmt
@@ -104,15 +87,15 @@ func StartMetricCollectorDataStoreSegment(txnID string, txnName string, datastor
 	var mxnDsSgmt MetricCollectorDatastoreSegment
 
 	if metricCollector.NewrelicApp != nil {
-		mxnSgmt.NewrelicSegment = startNewrelicDataStoreSegment(txn, segmentName, datastore, w, r)
+		mxnDsSgmt.DatastoreSegment = startNewrelicDataStoreSegment(txnID, txnName, datastore, w, r)
 	}
 
-	return mxnSgmt
+	return mxnDsSgmt
 }
 
 // MetricCollectorNoticeError Send error to newrelic
-func MetricCollectorNoticeError(err error) {
+func MetricCollectorNoticeError(txnID string, txnName string, err error, w http.ResponseWriter, r *http.Request) {
 	if metricCollector.NewrelicApp != nil {
-		newrelicNoticeError(err)
+		newrelicNoticeError(txnID, txnName, err, w, r)
 	}
 }
