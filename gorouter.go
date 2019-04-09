@@ -6,7 +6,6 @@ import (
 	"strings"
 
 	"github.com/illuminasy/gorouter/middleware"
-
 	"github.com/julienschmidt/httprouter"
 )
 
