@@ -1,3 +1,6 @@
+## 0.1.11 (April 10, 2019)
+  - Fixed undefined properties
+
 ## 0.1.10 (April 10, 2019)
   - Fixed import issues_2
 

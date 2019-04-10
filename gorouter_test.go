@@ -8,7 +8,6 @@ import (
 	"testing"
 
 	"github.com/illuminasy/gorouter/middleware"
-
 	"github.com/stretchr/testify/assert"
 )
 
@@ -45,21 +44,31 @@ var routes = Routes{
 	},
 }
 
-var mc = middleware.MiddlewareConfig{
-	Bugsnag: middleware.BugsnagConfig{
+var mc = middleware.Config{
+	ErrorReportingConfig: middleware.ErrorReportingConfig{
+		Enabled:      true,
+		Bugsnag:      true,
 		APIKey:       "testing",
-		ReleaseStage: "testing",
+		ReleaseStage: "Testing",
 		ProjectPackages: []string{
 			"main",
 		},
 		NotifyReleaseStages: []string{
-			"testing",
+			"Testing",
 		},
 		AppVersion: "0.1.0",
 	},
-	Newrelic: middleware.NewrelicConfig{
-		AppName: "Testing",
-		License: "testing",
+	MetricCollectorConfig: middleware.MetricCollectorConfig{
+		Enabled:  true,
+		Newrelic: true,
+		Debug:    true,
+		AppName:  "Testing",
+		License:  "testing",
+		Labels: map[string]string{
+			"Environment": "Dev",
+			"Version":     "0.1.0",
+		},
+		HostDisplayName: "testing.localhost",
 	},
 }
 

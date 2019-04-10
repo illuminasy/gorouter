@@ -60,7 +60,7 @@ package somepackge
 import "github.com/Illuminasy/gorouter"
 
 func startServer() {
-	mc := middleware.MiddlewareConfig{
+	mc := middleware.Config{
 		Bugsnag: middleware.BugsnagConfig{
 			APIKey:       "apikey",
 			ReleaseStage: "testing",
