@@ -49,7 +49,7 @@ func JsonHandler(handler func(http.ResponseWriter, *http.Request) string) httpro
 
 // GetRouter returns a router, optionally additional headers can be passed to set
 func GetRouter(routes Routes, additionalHeaders []string) *httprouter.Router {
-	return createRouter(routes, additionalHeaders, middleware.MiddlewareConfig{})
+	return createRouter(routes, additionalHeaders, middleware.Config{})
 }
 
 // GetRouterWithMiddleware returns a router with middlewares wrapped around it, optionally additional headers can be passed to set
