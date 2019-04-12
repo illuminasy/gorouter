@@ -1,3 +1,7 @@
+## 0.1.14 (April 13, 2019)
+  - Updated README.md
+  - Fixed travis.yml
+
 ## 0.1.13 (April 12, 2019)
   - Fixed bugsnag error reporting
 

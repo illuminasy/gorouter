@@ -66,20 +66,23 @@ func startServer() {
 			Enabled:      true,
 			Bugsnag:      true,
 			APIKey:       "testing",
-			ReleaseStage: "Testing",
+			AppType:      "router",
+			ReleaseStage: "Dev",
+			AppVersion:   "0.1.0",
 			ProjectPackages: []string{
 				"main",
 			},
 			NotifyReleaseStages: []string{
-				"Testing",
+				"Dev",
 			},
-			AppVersion: "0.1.0",
+			PanicHandler: func() {},
+			Hostname: "localhost",
 		},
 		MetricCollectorConfig: middleware.MetricCollectorConfig{
 			Enabled:  true,
 			Newrelic: true,
 			Debug:    true,
-			AppName:  "Testing",
+			AppName:  "TestApp",
 			License:  "testing",
 			Labels: map[string]string{
 				"Environment": "Dev",
