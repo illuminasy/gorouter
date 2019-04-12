@@ -7,8 +7,6 @@ import (
 	newrelic "github.com/newrelic/go-agent"
 )
 
-var metricCollector MetricCollector
-
 // MetricCollectorConfig Metric Collector config
 type MetricCollectorConfig struct {
 	Enabled         bool
@@ -18,11 +16,6 @@ type MetricCollectorConfig struct {
 	License         string
 	Labels          map[string]string
 	HostDisplayName string
-}
-
-// MetricCollector Middleware with list of metric collectors to use
-type MetricCollector struct {
-	NewrelicApp newrelic.Application
 }
 
 // MetricCollectorTxn Metric Collector transaction
@@ -75,7 +68,7 @@ func GetMetricCollectorTransaction(txnID string, txnName string, w http.Response
 func StartMetricCollectorSegment(txnID string, txnName string, segmentName string, w http.ResponseWriter, r *http.Request) MetricCollectorSegment {
 	var mxnSgmt MetricCollectorSegment
 
-	if metricCollector.NewrelicApp != nil {
+	if newRelicApp != nil {
 		mxnSgmt.Segment = startNewrelicSegment(txnID, txnName, segmentName, w, r)
 	}
 
@@ -86,7 +79,7 @@ func StartMetricCollectorSegment(txnID string, txnName string, segmentName strin
 func StartMetricCollectorDataStoreSegment(txnID string, txnName string, datastore DataStore, w http.ResponseWriter, r *http.Request) MetricCollectorDatastoreSegment {
 	var mxnDsSgmt MetricCollectorDatastoreSegment
 
-	if metricCollector.NewrelicApp != nil {
+	if newRelicApp != nil {
 		mxnDsSgmt.DatastoreSegment = startNewrelicDataStoreSegment(txnID, txnName, datastore, w, r)
 	}
 
@@ -95,7 +88,7 @@ func StartMetricCollectorDataStoreSegment(txnID string, txnName string, datastor
 
 // MetricCollectorNoticeError Send error to newrelic
 func MetricCollectorNoticeError(txnID string, txnName string, err error, w http.ResponseWriter, r *http.Request) {
-	if metricCollector.NewrelicApp != nil {
+	if newRelicApp != nil {
 		newrelicNoticeError(txnID, txnName, err, w, r)
 	}
 }

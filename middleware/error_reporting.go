@@ -26,3 +26,8 @@ func ErrorReportingMiddleware(router http.Handler, config ErrorReportingConfig) 
 
 	return router
 }
+
+// ReportErrorToBugsnag send error to bugsnag
+func ReportErrorToBugsnag(errorClass string, err error, a ...interface{}) error {
+	return sendError(errorClass, err, a...)
+}

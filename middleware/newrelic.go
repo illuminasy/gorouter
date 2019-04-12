@@ -77,6 +77,14 @@ func configureNewRelic(config MetricCollectorConfig) error {
 }
 
 func getNewrelicTransaction(id string, name string, w http.ResponseWriter, r *http.Request) newrelic.Transaction {
+	if len(newrelicTransactionList) == 0 {
+		newrelicTransactionList = make(map[string]map[string]newrelic.Transaction)
+	}
+
+	if _, ok := newrelicTransactionList[id]; !ok {
+		newrelicTransactionList[id] = make(map[string]newrelic.Transaction)
+	}
+
 	if txn, ok := w.(newrelic.Transaction); ok {
 		newrelicTransactionList[id][name] = txn
 		return txn

@@ -35,7 +35,7 @@ func routes() gorouter.Routes {
 			gorouter.Route{
 				Method:  "GET",
 				Path:    "/healthz",
-				Handler: gorouter.JsonHandler(healthzHandler),
+				Handler: gorouter.JSONHandler(healthzHandler),
 			},
 		},
 		PanicHandler: func(w http.ResponseWriter, r *http.Request, err interface{}) {
@@ -47,7 +47,7 @@ func routes() gorouter.Routes {
 	}
 }
 
-func healthzHandler() string {
+func healthzHandler(w http.ResponseWriter, r *http.Request) string {
 	return `{"status":"up"}`
 }
 
@@ -57,24 +57,35 @@ Router with middlewares
 ```go
 package somepackge
 
-import "github.com/Illuminasy/gorouter"
+import "github.com/illuminasy/gorouter"
+import "github.com/illuminasy/gorouter/middleware"
 
 func startServer() {
 	mc := middleware.Config{
-		Bugsnag: middleware.BugsnagConfig{
-			APIKey:       "apikey",
-			ReleaseStage: "testing",
+		ErrorReportingConfig: middleware.ErrorReportingConfig{
+			Enabled:      true,
+			Bugsnag:      true,
+			APIKey:       "testing",
+			ReleaseStage: "Testing",
 			ProjectPackages: []string{
 				"main",
 			},
 			NotifyReleaseStages: []string{
-				"testing",
+				"Testing",
 			},
 			AppVersion: "0.1.0",
 		},
-		Newrelic: middleware.NewrelicConfig{
-			AppName: "Testing",
-			License: "newrelickey",
+		MetricCollectorConfig: middleware.MetricCollectorConfig{
+			Enabled:  true,
+			Newrelic: true,
+			Debug:    true,
+			AppName:  "Testing",
+			License:  "testing",
+			Labels: map[string]string{
+				"Environment": "Dev",
+				"Version":     "0.1.0",
+			},
+			HostDisplayName: "localhost",
 		},
 	}
 
@@ -97,7 +108,7 @@ func routes() gorouter.Routes {
 			gorouter.Route{
 				Method:  "GET",
 				Path:    "/healthz",
-				Handler: gorouter.JsonHandler(healthzHandler),
+				Handler: gorouter.JSONHandler(healthzHandler),
 			},
 		},
 		PanicHandler: func(w http.ResponseWriter, r *http.Request, err interface{}) {
@@ -109,9 +120,65 @@ func routes() gorouter.Routes {
 	}
 }
 
-func healthzHandler() string {
+func healthzHandler(w http.ResponseWriter, r *http.Request) string {
 	return `{"status":"up"}`
 }
+```
+
+Gorouter starts a web transaction by wrapping middleware around the handlers
+but if you still need to create custom transactions (maybe non web stuff)
+```go
+	// w, r are w http.ResponseWriter, r *http.Request
+	// these are optionals, just pass nil instead for non web transactions
+	txn := middleware.GetMetricCollectorTransaction("someTxnID", "someTxnName", w, r)
+	// Do something
+	txn.End()
+```
+
+To create segments within a transaction
+```go
+	// w, r are w http.ResponseWriter, r *http.Request
+	// these are optionals, just pass nil instead
+	// if transaction doesnot exist then it creates new one.
+	s := middleware.StartMetricCollectorSegment("someTxnID", "someTxnName", "someSegmentName", w, r)
+	// Do something
+	s.End()
+```
+
+To create datastore segments within a transaction say for mysql
+```go
+	dataStore := middleware.DataStore {
+		Product: "mysql",
+		Collection: "users",
+		Operation: "INSERT",
+		ParameterizedQuery: `INSERT INTO users (name, age) VALUES ($1, $2)"`,
+		QueryParameters: map[string]interface{}{
+			"name": "Dracula",
+			"age": 439,
+		},
+		Host: "mysql-server-1",
+		PortPathOrID: "3306",
+		DatabaseName: "my_database",
+	}
+	// w, r are w http.ResponseWriter, r *http.Request
+	// these are optionals, just pass nil instead
+	// if transaction doesnot exist then it creates new one.
+	s := middleware.StartMetricCollectorDataStoreSegment("someTxnID", "someTxnName", dataStore, w, r)
+	// Do something
+	s.End()
+```
+
+To report errors to metric collectors
+```go
+	// w, r are w http.ResponseWriter, r *http.Request
+	// these are optionals, just pass nil instead
+	// if transaction doesnot exist then it creates new one.
+	middleware.MetricCollectorNoticeError("someTxnID", "someTxnName", errors.New("Invalid API config"), w, r)
+```
+
+Send Errors to bugsnag
+```go
+	middleware.ReportErrorToBugsnag("someErrorClass", errors.New("Invalid API config"))
 ```
 
 ## Thanks to
