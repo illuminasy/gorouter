@@ -1,3 +1,6 @@
+## 0.1.13 (April 12, 2019)
+  - Fixed bugsnag error reporting
+
 ## 0.1.12 (April 12, 2019)
   - Fixed segment reporting
   - Middleware Error Reporting will send errors to external such as bugsnag
