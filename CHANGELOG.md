@@ -1,3 +1,7 @@
+## 0.1.12 (April 12, 2019)
+  - Fixed segment reporting
+  - Middleware Error Reporting will send errors to external such as bugsnag
+
 ## 0.1.11 (April 10, 2019)
   - Fixed undefined properties
 
