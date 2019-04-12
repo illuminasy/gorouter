@@ -16,6 +16,7 @@ type ErrorReportingConfig struct {
 	NotifyReleaseStages []string
 	ParamsFilters       []string
 	PanicHandler        func()
+	Hostname            string
 }
 
 // ErrorReportingMiddleware configures and wraps error reporting handler around the router
