@@ -1,6 +1,5 @@
 language: go
 env:
-  matrix:
   - GO111MODULE=on
   - GOFLAGS='-mod vendor'
   global:
