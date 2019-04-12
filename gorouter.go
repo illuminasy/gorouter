@@ -9,11 +9,13 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+// Routes List of routes and panic handler
 type Routes struct {
 	List         []Route
 	PanicHandler func(w http.ResponseWriter, r *http.Request, err interface{})
 }
 
+// Route Each route needs url path, type of request and a handler
 type Route struct {
 	Method  string
 	Path    string
@@ -38,8 +40,8 @@ func PlainTextHandler(lines []string) httprouter.Handle {
 	}
 }
 
-// JsonHandler handles json responses with appropriate headers
-func JsonHandler(handler func(http.ResponseWriter, *http.Request) string) httprouter.Handle {
+// JSONHandler handles json responses with appropriate headers
+func JSONHandler(handler func(http.ResponseWriter, *http.Request) string) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		body := handler(w, r)
 		w.Header().Set("Content-Type", "application/json")

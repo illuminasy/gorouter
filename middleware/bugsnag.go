@@ -24,3 +24,9 @@ func bugsnagMiddleware(router http.Handler, config ErrorReportingConfig) http.Ha
 	configureBugsnag(config)
 	return bugsnag.Handler(router)
 }
+
+func sendError(errorClass string, err error, a ...interface{}) error {
+	// append error class so bugsnag can group errors using this
+	a = append([]interface{}{bugsnag.ErrorClass{Name: errorClass}}, a...)
+	return bugsnag.Notify(err, a...)
+}
