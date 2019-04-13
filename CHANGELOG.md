@@ -1,3 +1,6 @@
+## 0.1.25 (April 13, 2019)
+  - Fixed README.md
+
 ## 0.1.24 (April 13, 2019)
   - Fixed travis.yml
 
