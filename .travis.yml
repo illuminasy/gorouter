@@ -28,13 +28,14 @@ notifications:
   #   on_failure: never
 
 before_script:
-  - go get github.com/golang/lint/golint
+  - go get golang.org/x/lint/golint
   - go get golang.org/x/tools/cmd/cover
   - go get github.com/mattn/goveralls
 
 script:
   - golint ./... | grep -v "be unexported"
-  - go test -v -race -covermode=count $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN ./... # Run all the tests with the race detector enabled
+  - go test -v -race -covermode=count -coverprofile=coverage.out ./... # Run all the tests with the race detector enabled
+  - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN || exit 0
 
 # before_deploy:
 # deploy:
