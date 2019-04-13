@@ -33,8 +33,8 @@ before_script:
   - go get github.com/mattn/goveralls
 
 script:
-  - golint ./... | grep -v "be unexported"
-  - go test -v -race -covermode=count -coverprofile=coverage.out ./... # Run all the tests with the race detector enabled
+  - ${GOPATH}/bin/golint ./... | grep -v "be unexported"
+  - go test -v -race -covermode=atomic -coverprofile=coverage.out ./... # Run all the tests with the race detector enabled
   - $HOME/gopath/bin/goveralls -coverprofile=coverage.out -service=travis-ci -repotoken $COVERALLS_TOKEN || exit 0
 
 # before_deploy:
