@@ -1,7 +1,7 @@
 language: go
 
 go:
-  - "1.12.x"
+  - "1.11.x"
   - master
 
 # Force-enable Go modules. Also force go to use the code in vendor/
@@ -10,7 +10,6 @@ env:
   global:
     - secure: "AgSMfSShtZFz7Kqs98XjMSTHqyaL3CqTg5t/9Dg9iCNTli0zzD/M+pqM6h8Hb5/Zp1SjZKKrlBqRQ3rAZfmJRrOQVHrkV2iDRMwVMOZWnkD4dqvrRlv33lT5tyKx8Xz3AiDcdiMOEf35GoHI8vYqxPa/TOLIheCvp+Fb6dPKaP3ft+EijqYH3+SdxjZD9IXMv4/NRlcI/MG9eylunt707fwV/oJk2+N9VO55vkInl6bsIgJXwU8kFUSEoNsFTMkuGJ+ROCdMaLKl7ivcmhEuf0m6lOs8NqnT34FdOmp5zZOMuR38fUVJeKYtHgMaAtQkts5UUggip7B1NseDlif1tyP4JRLteb8pN61C1Ci8ecoiq6a0eRVhaVFF9WhPhgo8TZ+wkTgPtiAQ2RWzN1DrRg2O3gpWDfbWbxaJQZkLyt84XFjhk+axFS2YPd454qV4blDqD5+eZqvBEzQhCbJ6wEbXRDnxDuioBNaYFdp98ahqRUHTITGJhOPTjTnjU/g70WCxrTz2sGOlH6/al41Ka8wI2tbhwuUg0IYaMbqD++19YT+lbPXHza3FvxQkkFFi32yeIfsTDXu9aD4kyhsuObd6e16/6QlJTXfkIJT5EDKMTS6Br/mt+16TuHd81X9MRTHWuYTEpvNOqAMguDmgoBclqnjGLp9P4QPIehGfypE="
     - GO111MODULE=on
-    - GOFLAGS='-mod vendor'
 
 # Only clone the most recent commit.
 git:
