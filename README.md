@@ -1,4 +1,4 @@
-# GORouter [![Build Status](https://travis-ci.org/illuminasy/gorouter.svg?branch=master)](https://travis-ci.org/illuminasy/gorouter) [![GoDoc](https://godoc.org/github.com/illuminasy/gorouter?status.svg)](https://godoc.org/github.com/illuminasy/gorouter) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/illuminasy/gorouter/blob/master/LICENSE.md)
+# GORouter [![Build Status](https://travis-ci.org/illuminasy/gorouter.svg?branch=master)](https://travis-ci.org/illuminasy/gorouter) [![Coverage Status](https://coveralls.io/repos/github/illuminasy/gorouter/badge.svg?branch=master)](https://coveralls.io/github/illuminasy/gorouter?branch=master) [![GoDoc](https://godoc.org/github.com/illuminasy/gorouter?status.svg)](https://godoc.org/github.com/illuminasy/gorouter) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/illuminasy/gorouter/blob/master/LICENSE.md)
 
 GoRouter a package which wraps around https://github.com/julienschmidt/httprouter
 allows to start router with middlewares

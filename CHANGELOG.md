@@ -1,3 +1,6 @@
+## 0.1.26 (April 13, 2019)
+  - Added Coverage badge to README.md
+
 ## 0.1.25 (April 13, 2019)
   - Fixed README.md
 
