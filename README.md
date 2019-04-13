@@ -1,4 +1,4 @@
-# GORouter [![Build Status](https://travis-ci.org/Illuminasy/gorouter.svg?branch=master)](https://travis-ci.org/Illuminasy/gorouter) [![GoDoc](https://godoc.org/github.com/Illuminasy/gorouter?status.svg)](https://godoc.org/github.com/Illuminasy/gorouter) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Illuminasy/gorouter/blob/master/LICENSE.md)
+# GORouter [![Build Status](https://travis-ci.org/illuminasy/gorouter.svg?branch=master)](https://travis-ci.org/illuminasy/gorouter) [![GoDoc](https://godoc.org/github.com/illuminasy/gorouter?status.svg)](https://godoc.org/github.com/illuminasy/gorouter) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/illuminasy/gorouter/blob/master/LICENSE.md)
 
 GoRouter a package which wraps around https://github.com/julienschmidt/httprouter
 allows to start router with middlewares
@@ -11,7 +11,7 @@ Currently supported middlewares:
 
 Get the library:
 
-    $ go get -v github.com/Illuminasy/gorouter
+    $ go get -v github.com/illuminasy/gorouter
 
 Just the router (no middleware)
 ```go
