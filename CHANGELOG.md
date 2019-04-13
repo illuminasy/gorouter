@@ -1,3 +1,6 @@
+## 0.1.24 (April 13, 2019)
+  - Fixed travis.yml
+
 ## 0.1.23 (April 13, 2019)
   - Fixed travis.yml
 
