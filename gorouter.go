@@ -35,17 +35,37 @@ var headersAllowedByCORS = []string{
 func PlainTextHandler(lines []string) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 		contents := []byte(strings.Join(lines, "\n"))
+		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "text/plain")
 		w.Write(contents)
 	}
 }
 
 // JSONHandler handles json responses with appropriate headers
-func JSONHandler(handler func(http.ResponseWriter, *http.Request) string) httprouter.Handle {
+func JSONHandler(handler func(http.ResponseWriter, *http.Request) (string, int)) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-		body := handler(w, r)
+		body, statusCode := handler(w, r)
+		w.WriteHeader(statusCode)
 		w.Header().Set("Content-Type", "application/json")
 		w.Write([]byte(body))
+	}
+}
+
+// HTMLHandler handles html responses with appropriate headers
+func HTMLHandler(handler func(http.ResponseWriter, *http.Request) (string, int)) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		body, statusCode := handler(w, r)
+		w.WriteHeader(statusCode)
+		w.Header().Set("Content-Type", "text/html; charset=utf-8")
+		w.Write([]byte(body))
+	}
+}
+
+// StaticFileHandler handles static files responses with appropriate headers
+func StaticFileHandler(path string) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		w.WriteHeader(http.StatusOK)
+		http.FileServer(http.Dir(path))
 	}
 }
 

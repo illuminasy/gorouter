@@ -1,3 +1,8 @@
+## 0.1.27 (May 26, 2019)
+  - Added html handlers
+  - Added static file handlers
+  - Added ability to set status codes
+
 ## 0.1.26 (April 13, 2019)
   - Added Coverage badge to README.md
 

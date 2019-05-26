@@ -24,14 +24,14 @@ var routes = Routes{
 		Route{
 			Method: "GET",
 			Path:   "/healthz",
-			Handler: JSONHandler(func(w http.ResponseWriter, r *http.Request) string {
-				return `{"status":"up"}`
+			Handler: JSONHandler(func(w http.ResponseWriter, r *http.Request) (string, int) {
+				return `{"status":"up"}`, http.StatusOK
 			}),
 		},
 		Route{
 			Method: "GET",
 			Path:   "/panic",
-			Handler: JSONHandler(func(w http.ResponseWriter, r *http.Request) string {
+			Handler: JSONHandler(func(w http.ResponseWriter, r *http.Request) (string, int) {
 				panic("testing...")
 			}),
 		},
