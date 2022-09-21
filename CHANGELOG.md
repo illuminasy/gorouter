@@ -1,3 +1,6 @@
+## 0.2.0 (September 21, 2022)
+  - Upgraded packages
+
 ## 0.1.27 (May 26, 2019)
   - Added html handlers
   - Added static file handlers
