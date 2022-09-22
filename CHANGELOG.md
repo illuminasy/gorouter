@@ -1,3 +1,6 @@
+## 0.2.1 (September 22, 2022)
+  - Changed go version to v1.19
+
 ## 0.2.0 (September 21, 2022)
   - Upgraded packages
 
