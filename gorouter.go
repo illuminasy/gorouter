@@ -61,6 +61,15 @@ func HTMLHandler(handler func(http.ResponseWriter, *http.Request) (string, int))
 	}
 }
 
+// FileHandler handles files responses with appropriate headers
+func FileHandler(handler func(http.ResponseWriter, *http.Request) (string, int)) httprouter.Handle {
+	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+		path, statusCode := handler(w, r)
+		w.WriteHeader(statusCode)
+		http.FileServer(http.Dir(path))
+	}
+}
+
 // StaticFileHandler handles static files responses with appropriate headers
 func StaticFileHandler(path string) httprouter.Handle {
 	return func(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
