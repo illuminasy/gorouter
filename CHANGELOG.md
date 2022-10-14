@@ -1,3 +1,6 @@
+## 0.2.3 (October 15, 2022)
+  - Added File Handler
+
 ## 0.2.2 (October 15, 2022)
   - Fixed request log nil error
 
