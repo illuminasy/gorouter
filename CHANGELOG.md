@@ -1,3 +1,6 @@
+## 0.2.2 (October 15, 2022)
+  - Fixed request log nil error
+
 ## 0.2.1 (September 22, 2022)
   - Changed go version to v1.19
 
