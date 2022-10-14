@@ -35,7 +35,9 @@ func newrelicMiddleware(handler httprouter.Handle, path string, config MetricCol
 			txn := newRelicApp.StartTransaction(path, w, r)
 			defer func() {
 				err := txn.End()
-				log.Println(err)
+				if err != nil {
+					log.Println(err)
+				}
 			}()
 			handler(txn, r, ps)
 			return
